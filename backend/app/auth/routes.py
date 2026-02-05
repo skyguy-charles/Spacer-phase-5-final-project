@@ -13,3 +13,22 @@ from app.auth.service import (
 )
 
 router = APIRouter()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@router.post("/register")
+def register(
+    data: RegisterRequest,
+    db: Session = Depends(get_db)
+):
+    return register_user(
+        db=db,
+        name=data.name,
+        email=data.email,
+        password=data.password
+    )
