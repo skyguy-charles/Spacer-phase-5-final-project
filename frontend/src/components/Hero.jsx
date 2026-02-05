@@ -7,13 +7,13 @@ const Hero = ({ onGetStartedClick }) => {
   const { isAuthenticated, user } = useSelector(state => state.auth);
   const navigate = useNavigate();
 
-//   const handleClientDashboard = () => {
-//     if (isAuthenticated && user?.role === 'client') {
-//       navigate('/client-dashboard');
-//     } else {
-//       onGetStartedClick();
-//     }
-//   };
+  const handleClientDashboard = () => {
+    if (isAuthenticated && user?.role === 'client') {
+      navigate('/client-dashboard');
+    } else {
+      onGetStartedClick();
+    }
+  };
 
 //   const handleAdminDashboard = () => {
 //     if (isAuthenticated && user?.role === 'admin') {
