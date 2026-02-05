@@ -45,117 +45,117 @@ const LoginModal = ({ isOpen, onClose }) => {
     }
   };
 
-  const resetForm = () => {
-    setFormData({ name: '', email: '', password: '', role: 'client' });
-  };
+//   const resetForm = () => {
+//     setFormData({ name: '', email: '', password: '', role: 'client' });
+//   };
 
-  const toggleMode = () => {
-    setIsLogin(!isLogin);
-    resetForm();
-  };
+//   const toggleMode = () => {
+//     setIsLogin(!isLogin);
+//     resetForm();
+//   };
 
-  if (!isOpen) return null;
+//   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">
-            {isLogin ? 'Login' : 'Sign Up'}
-          </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <FiX size={24} />
-          </button>
-        </div>
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+//       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+//         <div className="flex justify-between items-center mb-4">
+//           <h2 className="text-xl font-semibold">
+//             {isLogin ? 'Login' : 'Sign Up'}
+//           </h2>
+//           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+//             <FiX size={24} />
+//           </button>
+//         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium mb-1">Name</label>
-              <div className="relative">
-                <FiUser className="absolute left-3 top-3 text-gray-400" />
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-            </div>
-          )}
+//         <form onSubmit={handleSubmit} className="space-y-4">
+//           {!isLogin && (
+//             <div>
+//               <label className="block text-sm font-medium mb-1">Name</label>
+//               <div className="relative">
+//                 <FiUser className="absolute left-3 top-3 text-gray-400" />
+//                 <input
+//                   type="text"
+//                   value={formData.name}
+//                   onChange={(e) => setFormData({...formData, name: e.target.value})}
+//                   className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//                   placeholder="Your name"
+//                   required
+//                 />
+//               </div>
+//             </div>
+//           )}
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <div className="relative">
-              <FiMail className="absolute left-3 top-3 text-gray-400" />
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="your@email.com"
-                required
-              />
-            </div>
-          </div>
+//           <div>
+//             <label className="block text-sm font-medium mb-1">Email</label>
+//             <div className="relative">
+//               <FiMail className="absolute left-3 top-3 text-gray-400" />
+//               <input
+//                 type="email"
+//                 value={formData.email}
+//                 onChange={(e) => setFormData({...formData, email: e.target.value})}
+//                 className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//                 placeholder="your@email.com"
+//                 required
+//               />
+//             </div>
+//           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
-            <div className="relative">
-              <FiLock className="absolute left-3 top-3 text-gray-400" />
-              <input
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData({...formData, password: e.target.value})}
-                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="Your password"
-                required
-              />
-            </div>
-          </div>
+//           <div>
+//             <label className="block text-sm font-medium mb-1">Password</label>
+//             <div className="relative">
+//               <FiLock className="absolute left-3 top-3 text-gray-400" />
+//               <input
+//                 type="password"
+//                 value={formData.password}
+//                 onChange={(e) => setFormData({...formData, password: e.target.value})}
+//                 className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//                 placeholder="Your password"
+//                 required
+//               />
+//             </div>
+//           </div>
 
-          {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium mb-1">Role</label>
-              <div className="relative">
-                <FiUserCheck className="absolute left-3 top-3 text-gray-400" />
-                <select
-                  value={formData.role}
-                  onChange={(e) => setFormData({...formData, role: e.target.value})}
-                  className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="client">Client</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-            </div>
-          )}
+//           {!isLogin && (
+//             <div>
+//               <label className="block text-sm font-medium mb-1">Role</label>
+//               <div className="relative">
+//                 <FiUserCheck className="absolute left-3 top-3 text-gray-400" />
+//                 <select
+//                   value={formData.role}
+//                   onChange={(e) => setFormData({...formData, role: e.target.value})}
+//                   className="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+//                 >
+//                   <option value="client">Client</option>
+//                   <option value="admin">Admin</option>
+//                 </select>
+//               </div>
+//             </div>
+//           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
-          >
-            {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
-          </button>
-        </form>
+//           <button
+//             type="submit"
+//             disabled={loading}
+//             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+//           >
+//             {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
+//           </button>
+//         </form>
 
-        <div className="mt-4 text-center">
-          <span className="text-gray-600">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
-          </span>
-          <button
-            onClick={toggleMode}
-            className="text-blue-600 hover:text-blue-700 font-medium"
-          >
-            {isLogin ? 'Sign Up' : 'Login'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+//         <div className="mt-4 text-center">
+//           <span className="text-gray-600">
+//             {isLogin ? "Don't have an account? " : "Already have an account? "}
+//           </span>
+//           <button
+//             onClick={toggleMode}
+//             className="text-blue-600 hover:text-blue-700 font-medium"
+//           >
+//             {isLogin ? 'Sign Up' : 'Login'}
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-export default LoginModal;
+// export default LoginModal;
