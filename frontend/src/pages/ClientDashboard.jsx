@@ -25,7 +25,7 @@ const ClientDashboard = () => {
 
   const categories = ['all', 'coworking', 'meeting-room', 'event-space', 'private-office', 'studio', 'office', 'conference', 'creative-studio', 'wellness', 'classroom', 'recording', 'photography', 'virtual', 'retail'];
   const locations = ['all', 'cbd', 'westlands', 'kilimani', 'karen', 'upper-hill', 'parklands', 'runda'];
-  const priceRanges = ['all', '0-50', '51-100', '101-200', '201-500', '501+'];
+  const priceRanges = ['all', '0-5000', '5001-10000', '10001-20000', '20001-50000', '50001+'];
 
   const filteredSpaces = spaces.filter(space => {
     const matchesSearch = space.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,11 +40,11 @@ const ClientDashboard = () => {
                            space.location.toLowerCase().includes(selectedLocation);
     
     const matchesPrice = priceRange === 'all' || 
-      (priceRange === '0-50' && space.price <= 50) ||
-      (priceRange === '51-100' && space.price > 50 && space.price <= 100) ||
-      (priceRange === '101-200' && space.price > 100 && space.price <= 200) ||
-      (priceRange === '201-500' && space.price > 200 && space.price <= 500) ||
-      (priceRange === '501+' && space.price > 500);
+      (priceRange === '0-5000' && space.price <= 5000) ||
+      (priceRange === '5001-10000' && space.price > 5000 && space.price <= 10000) ||
+      (priceRange === '10001-20000' && space.price > 10000 && space.price <= 20000) ||
+      (priceRange === '20001-50000' && space.price > 20000 && space.price <= 50000) ||
+      (priceRange === '50001+' && space.price > 50000);
 
     return matchesSearch && matchesCategory && matchesLocation && matchesPrice;
   });
@@ -152,11 +152,11 @@ const ClientDashboard = () => {
                   className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="all">All Prices</option>
-                  <option value="0-50">KSH 0 - 50</option>
-                  <option value="51-100">KSH 51 - 100</option>
-                  <option value="101-200">KSH 101 - 200</option>
-                  <option value="201-500">KSH 201 - 500</option>
-                  <option value="501+">KSH 501+</option>
+                  <option value="0-5000">KSH 0 - 5,000</option>
+                  <option value="5001-10000">KSH 5,001 - 10,000</option>
+                  <option value="10001-20000">KSH 10,001 - 20,000</option>
+                  <option value="20001-50000">KSH 20,001 - 50,000</option>
+                  <option value="50001+">KSH 50,001+</option>
                 </select>
 
                 {/* Clear Filters */}
