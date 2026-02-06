@@ -140,6 +140,22 @@ const initialSpaces = [
     available: true,
     featured: true,
   },
+  {
+    id: 7,
+    name: 'Private Meeting Room',
+    description: 'Intimate meeting space for small teams. Perfect for interviews, quick meetings, and brainstorming sessions.',
+    type: 'meeting',
+    category: 'Meeting Room',
+    price: 45,
+    priceUnit: 'hour',
+    capacity: 6,
+    location: '111 Corporate Plaza, Nairobi - Upper Hill',
+    image: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80',
+    amenities: ['WiFi', 'Whiteboard', 'Video Conferencing', 'Coffee', 'Projector'],
+    rating: 4.5,
+    reviews: 156,
+    available: true,
+    featured: false,
 
 
 
