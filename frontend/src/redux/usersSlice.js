@@ -135,6 +135,42 @@ const usersSlice = createSlice({
     },
   },
 });
+// Export actions
+export const {
+  addUser,
+  updateUser,
+  deleteUser,
+  updateUserRole,
+  selectUser,
+  clearSelectedUser,
+  updateUserStats,
+} = usersSlice.actions;
+
+// Selectors
+export const selectAllUsers = (state) => state.users.users;
+export const selectSelectedUser = (state) => state.users.selectedUser;
+
+// Get user by ID
+export const selectUserById = (id) => (state) => 
+  state.users.users.find(u => u.id === id);
+
+// Get users by role
+export const selectUsersByRole = (role) => (state) => 
+  state.users.users.filter(u => u.role === role);
+
+// Get client count
+export const selectClientCount = (state) => 
+  state.users.users.filter(u => u.role === 'client').length;
+
+// Get admin count
+export const selectAdminCount = (state) => 
+  state.users.users.filter(u => u.role === 'admin').length;
+
+// Get total revenue from all clients
+export const selectTotalRevenue = (state) => 
+  state.users.users.reduce((sum, u) => sum + (u.totalSpent || 0), 0);
+
+export default usersSlice.reducer;
 
 
 
