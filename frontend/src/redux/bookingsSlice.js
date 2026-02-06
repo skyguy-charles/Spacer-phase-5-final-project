@@ -163,6 +163,27 @@ export const selectBookingStats = (state) => {
   const bookings = state.bookings.bookings;
   return {
 
+ total: bookings.length,
+    pending: bookings.filter(b => b.status === 'pending').length,
+    confirmed: bookings.filter(b => b.status === 'confirmed').length,
+    completed: bookings.filter(b => b.status === 'completed').length,
+    cancelled: bookings.filter(b => b.status === 'cancelled').length,
+    totalRevenue: bookings
+      .filter(b => b.status === 'confirmed' || b.status === 'completed')
+      .reduce((sum, b) => sum + b.totalPrice, 0),
+  };
+};
+
+// Get upcoming bookings
+export const selectUpcomingBookings = (state) => {
+  const today = new Date().toISOString().split('T')[0];
+  return state.bookings.bookings
+    .filter(b => b.date >= today && b.status !== 'cancelled')
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+};
+
+export default bookingsSlice.reducer;
+
 
 
 
