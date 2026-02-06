@@ -1,0 +1,1 @@
+from app.payments.routes import router

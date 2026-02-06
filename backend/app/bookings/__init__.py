@@ -1,1 +1,1 @@
-from .routes import router
+from app.bookings.routes import router
