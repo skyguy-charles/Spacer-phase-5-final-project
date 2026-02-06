@@ -123,6 +123,23 @@ const initialSpaces = [
     available: true,
     featured: false,
   },
+{
+    id: 6,
+    name: 'Event Venue Hall',
+    description: 'Elegant event venue perfect for weddings, parties, and corporate events. Fully customizable space.',
+    type: 'event',
+    category: 'Event Space',
+    price: 2000,
+    priceUnit: 'event',
+    capacity: 200,
+    location: '888 Celebration Blvd, Nairobi - CBD',
+    image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80',
+    amenities: ['WiFi', 'Catering Kitchen', 'Stage', 'Parking', 'Decoration Services'],
+    rating: 4.8,
+    reviews: 89,
+    available: true,
+    featured: true,
+  },
 
 
 
