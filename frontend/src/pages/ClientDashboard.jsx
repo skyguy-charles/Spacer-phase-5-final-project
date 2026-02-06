@@ -232,7 +232,7 @@ const ClientDashboard = () => {
                           </div>
                           <div className="flex items-center">
                             <FiDollarSign className="mr-2" />
-                              <span>KSH {booking.totalPrice}</span>
+                              <span>KSH {booking.totalPrice.toLocaleString()}</span>
                           </div>
                         </div>
                         <div className="mt-4">

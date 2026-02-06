@@ -313,7 +313,7 @@ const AdminDashboard = () => {
                           <p className="text-sm text-gray-600">{user?.name}</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium">KSH {booking.totalPrice}</p>
+                          <p className="font-medium">KSH {booking.totalPrice.toLocaleString()}</p>
                           <p className="text-sm text-gray-600">{new Date(booking.date).toLocaleDateString()}</p>
                         </div>
                       </div>
@@ -333,7 +333,7 @@ const AdminDashboard = () => {
                       </div>
                       <div className="text-right">
                         <p className="font-medium">{space.bookingCount} bookings</p>
-                        <p className="text-sm text-gray-600">KSH {space.price}/{space.priceUnit}</p>
+                        <p className="text-sm text-gray-600">KSH {space.price.toLocaleString()}/{space.priceUnit}</p>
                       </div>
                     </div>
                   ))}
@@ -375,7 +375,7 @@ const AdminDashboard = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-gray-600 capitalize">
                         {space.category.replace('-', ' ')}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">KSH {space.price}/{space.priceUnit}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">KSH {space.price.toLocaleString()}/{space.priceUnit}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button
                           onClick={() => {
@@ -435,7 +435,7 @@ const AdminDashboard = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-gray-600">
                           {booking.startTime} - {booking.endTime}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">KSH {booking.totalPrice}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">KSH {booking.totalPrice.toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <select
                             value={booking.status}
