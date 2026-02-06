@@ -32,7 +32,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white">Coworking Spaces</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white"></a></li>
               <li><a href="#" className="text-gray-300 hover:text-white">Meeting Rooms</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white">Event Spaces</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white">Private Offices</a></li>
