@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../redux/authSlice';
-import { FiMenu, FiX, FiUser, FiHome } from 'react-icons/fi';
+import { FiMenu, FiX, FiUser, FiHome, FiGrid } from 'react-icons/fi';
 
 const Navbar = ({ onLoginClick, dashboardType = null }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +54,10 @@ const Navbar = ({ onLoginClick, dashboardType = null }) => {
           <div className="flex items-center">
             <button 
               onClick={handleLogoClick}
-              className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-2"
             >
-              Spacer
+              <FiGrid className="text-3xl" />
+              <span>Spacer</span>
             </button>
             {dashboardType && (
               <span className="ml-4 text-sm text-gray-500 hidden sm:inline">
