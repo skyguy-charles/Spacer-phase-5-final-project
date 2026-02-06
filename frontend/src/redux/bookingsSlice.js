@@ -133,7 +133,36 @@ const bookingsSlice = createSlice({
       .addCase(createBooking.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;
-      });
+      });  }
+});
+
+// Export actions
+export const {
+  updateBookingStatus,
+  updateBooking,
+  cancelBooking,
+  deleteBooking,
+  selectBooking,
+  clearSelectedBooking,
+} = bookingsSlice.actions;
+
+// Selectors
+export const selectAllBookings = (state) => state.bookings.bookings;
+export const selectSelectedBooking = (state) => state.bookings.selectedBooking;
+
+// Get bookings for a specific user (helper selector)
+export const selectUserBookings = (state, userId) => 
+  state.bookings.bookings.filter(b => b.userId === userId);
+
+// Get bookings by status
+export const selectBookingsByStatus = (status) => (state) => 
+  state.bookings.bookings.filter(b => b.status === status);
+
+// Get booking statistics
+export const selectBookingStats = (state) => {
+  const bookings = state.bookings.bookings;
+  return {
+
 
 
 
