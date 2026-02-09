@@ -1,166 +1,98 @@
-// Bookings Slice - Manages booking records
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchAPI } from '../services/api';
 
-// Mock bookings data (normalized to { date, startTime, endTime })
-const initialBookings = [
-  {
-    id: 1,
-    spaceId: 1,
-    spaceName: 'Downtown Office Suite',
-    userId: 1,
-    userName: 'John Client',
-    userEmail: 'client@demo.com',
-    date: '2024-12-01',
-    startTime: '09:00',
-    endTime: '17:00',
-    totalPrice: 750,
-    status: 'confirmed',
-    createdAt: '2024-11-20T10:30:00Z',
-    notes: 'Need parking pass for 3 vehicles',
-  },
-  {
-    id: 2,
-    spaceId: 2,
-    spaceName: 'Creative Studio Loft',
-    userId: 1,
-    userName: 'John Client',
-    userEmail: 'client@demo.com',
-    date: '2024-12-10',
-    startTime: '10:00',
-    endTime: '14:00',
-    totalPrice: 300,
-    status: 'pending',
-    createdAt: '2024-11-22T14:20:00Z',
-    notes: 'Will bring own lighting equipment',
-  },
-  {
-    id: 3,
-    spaceId: 3,
-    spaceName: 'Conference Center',
-    userId: 1,
-    userName: 'John Client',
-    userEmail: 'client@demo.com',
-    date: '2024-11-15',
-    startTime: '09:00',
-    endTime: '17:00',
-    totalPrice: 500,
-    status: 'completed',
-    createdAt: '2024-11-10T09:00:00Z',
-    notes: 'Quarterly team meeting - catering confirmed',
-  },
-];
+const initialState = { bookings: [], selectedBooking: null, loading: false, error: null };
 
-const initialState = {
-  bookings: initialBookings,
-  selectedBooking: null,
-  loading: false,
-  error: null,
-};
+export const fetchBookings = createAsyncThunk('bookings/fetchBookings', async (_, { rejectWithValue }) => {
+  try {
+    const data = await fetchAPI('/bookings', { method: 'GET' });
+    return data.bookings || data;
+  } catch (err) { return rejectWithValue(err.message); }
+});
 
-// Async thunk to create a booking
-export const createBooking = createAsyncThunk(
-  'bookings/createBooking',
-  async (bookingData, { getState, rejectWithValue }) => {
-    // Basic validation
-    if (!bookingData.spaceId || !bookingData.userId || !bookingData.date) {
-      return rejectWithValue('Missing booking data');
-    }
-    const { bookings } = getState().bookings;
-    const id = Math.max(...bookings.map(b => b.id), 0) + 1;
-    const payload = {
-      id,
-      ...bookingData,
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-    };
-    return payload;
-  }
-);
+export const fetchUserBookings = createAsyncThunk('bookings/fetchUserBookings', async (userId, { rejectWithValue }) => {
+  try {
+    const data = await fetchAPI(`/bookings/user/${userId}`, { method: 'GET' });
+    return data.bookings || data;
+  } catch (err) { return rejectWithValue(err.message); }
+});
+
+export const createBooking = createAsyncThunk('bookings/createBooking', async (bookingData, { rejectWithValue }) => {
+  try {
+    const data = await fetchAPI('/bookings', { method: 'POST', body: JSON.stringify(bookingData) });
+    return data;
+  } catch (err) { return rejectWithValue(err.message); }
+});
+
+export const updateBookingStatusAPI = createAsyncThunk('bookings/updateBookingStatus', async ({ id, status }, { rejectWithValue }) => {
+  try {
+    const data = await fetchAPI(`/bookings/${id}`, { method: 'PUT', body: JSON.stringify({ status }) });
+    return data;
+  } catch (err) { return rejectWithValue(err.message); }
+});
+
+export const cancelBookingAPI = createAsyncThunk('bookings/cancelBooking', async (id, { rejectWithValue }) => {
+  try {
+    const data = await fetchAPI(`/bookings/${id}/cancel`, { method: 'POST' });
+    return data;
+  } catch (err) { return rejectWithValue(err.message); }
+});
+
+export const deleteBookingAPI = createAsyncThunk('bookings/deleteBooking', async (id, { rejectWithValue }) => {
+  try {
+    await fetchAPI(`/bookings/${id}`, { method: 'DELETE' });
+    return id;
+  } catch (err) { return rejectWithValue(err.message); }
+});
 
 const bookingsSlice = createSlice({
   name: 'bookings',
   initialState,
   reducers: {
-    // Update booking status (Admin)
-    updateBookingStatus: (state, action) => {
-      const { id, status } = action.payload;
-      const booking = state.bookings.find(b => b.id === id);
-      if (booking) {
-        booking.status = status;
-      }
-    },
-    
-    // Update booking details
-    updateBooking: (state, action) => {
-      const index = state.bookings.findIndex(b => b.id === action.payload.id);
-      if (index !== -1) {
-        state.bookings[index] = { ...state.bookings[index], ...action.payload };
-      }
-    },
-    
-    // Cancel booking
-    cancelBooking: (state, action) => {
-      const booking = state.bookings.find(b => b.id === action.payload);
-      if (booking) {
-        booking.status = 'cancelled';
-      }
-    },
-    
-    // Delete booking (Admin)
-    deleteBooking: (state, action) => {
-      state.bookings = state.bookings.filter(b => b.id !== action.payload);
-    },
-    
-    // Select a booking
-    selectBooking: (state, action) => {
-      state.selectedBooking = state.bookings.find(b => b.id === action.payload) || null;
-    },
-    
-    // Clear selected booking
-    clearSelectedBooking: (state) => {
-      state.selectedBooking = null;
-    },
+    selectBooking: (state, action) => { state.selectedBooking = state.bookings.find(b => b.id === action.payload) || null; },
+    clearSelectedBooking: (state) => { state.selectedBooking = null; },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createBooking.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+      .addCase(fetchBookings.pending, (s) => { s.loading = true; s.error = null; })
+      .addCase(fetchBookings.fulfilled, (s, a) => { s.loading = false; s.bookings = a.payload; })
+      .addCase(fetchBookings.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+
+      .addCase(fetchUserBookings.pending, (s) => { s.loading = true; })
+      .addCase(fetchUserBookings.fulfilled, (s, a) => { s.loading = false; s.bookings = a.payload; })
+      .addCase(fetchUserBookings.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+
+      .addCase(createBooking.pending, (s) => { s.loading = true; s.error = null; })
+      .addCase(createBooking.fulfilled, (s, a) => { s.loading = false; s.bookings.push(a.payload); })
+      .addCase(createBooking.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+
+      .addCase(updateBookingStatusAPI.pending, (s) => { s.loading = true; })
+      .addCase(updateBookingStatusAPI.fulfilled, (s, a) => {
+        s.loading = false;
+        const i = s.bookings.findIndex(b => b.id === a.payload.id);
+        if (i !== -1) s.bookings[i] = a.payload;
       })
-      .addCase(createBooking.fulfilled, (state, action) => {
-        state.loading = false;
-        state.bookings.push(action.payload);
+      .addCase(updateBookingStatusAPI.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+
+      .addCase(cancelBookingAPI.pending, (s) => { s.loading = true; })
+      .addCase(cancelBookingAPI.fulfilled, (s, a) => {
+        s.loading = false;
+        const i = s.bookings.findIndex(b => b.id === a.payload.id);
+        if (i !== -1) s.bookings[i] = a.payload;
       })
-      .addCase(createBooking.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || action.error.message;
-      });
-  }
+      .addCase(cancelBookingAPI.rejected, (s, a) => { s.loading = false; s.error = a.payload; })
+
+      .addCase(deleteBookingAPI.pending, (s) => { s.loading = true; })
+      .addCase(deleteBookingAPI.fulfilled, (s, a) => { s.loading = false; s.bookings = s.bookings.filter(b => b.id !== a.payload); })
+      .addCase(deleteBookingAPI.rejected, (s, a) => { s.loading = false; s.error = a.payload; });
+  },
 });
 
-// Export actions
-export const {
-  updateBookingStatus,
-  updateBooking,
-  cancelBooking,
-  deleteBooking,
-  selectBooking,
-  clearSelectedBooking,
-} = bookingsSlice.actions;
-
-// Selectors
+export const { selectBooking, clearSelectedBooking } = bookingsSlice.actions;
 export const selectAllBookings = (state) => state.bookings.bookings;
 export const selectSelectedBooking = (state) => state.bookings.selectedBooking;
-
-// Get bookings for a specific user (helper selector)
-export const selectUserBookings = (state, userId) => 
-  state.bookings.bookings.filter(b => b.userId === userId);
-
-// Get bookings by status
-export const selectBookingsByStatus = (status) => (state) => 
-  state.bookings.bookings.filter(b => b.status === status);
-
-// Get booking statistics
+export const selectUserBookings = (state, userId) => state.bookings.bookings.filter(b => b.userId === userId);
+export const selectBookingsByStatus = (status) => (state) => state.bookings.bookings.filter(b => b.status === status);
 export const selectBookingStats = (state) => {
   const bookings = state.bookings.bookings;
   return {
@@ -169,19 +101,11 @@ export const selectBookingStats = (state) => {
     confirmed: bookings.filter(b => b.status === 'confirmed').length,
     completed: bookings.filter(b => b.status === 'completed').length,
     cancelled: bookings.filter(b => b.status === 'cancelled').length,
-    totalRevenue: bookings
-      .filter(b => b.status === 'confirmed' || b.status === 'completed')
-      .reduce((sum, b) => sum + b.totalPrice, 0),
+    totalRevenue: bookings.filter(b => b.status === 'confirmed' || b.status === 'completed').reduce((sum, b) => sum + (b.totalPrice || 0), 0),
   };
 };
-
-// Get upcoming bookings
 export const selectUpcomingBookings = (state) => {
   const today = new Date().toISOString().split('T')[0];
-  return state.bookings.bookings
-    .filter(b => b.date >= today && b.status !== 'cancelled')
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+  return state.bookings.bookings.filter(b => b.date >= today && b.status !== 'cancelled').sort((a,b) => new Date(a.date) - new Date(b.date));
 };
-
 export default bookingsSlice.reducer;
-
