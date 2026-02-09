@@ -5,7 +5,7 @@ const initialState = { bookings: [], selectedBooking: null, loading: false, erro
 
 export const fetchBookings = createAsyncThunk('bookings/fetchBookings', async (_, { rejectWithValue }) => {
   try {
-    const data = await fetchAPI('/bookings', { method: 'GET' });
+    const data = await fetchAPI('/bookings/me', { method: 'GET' });
     return data.bookings || data;
   } catch (err) { return rejectWithValue(err.message); }
 });

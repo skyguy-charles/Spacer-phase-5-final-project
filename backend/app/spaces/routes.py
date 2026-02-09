@@ -75,3 +75,13 @@ def admin_update_space(
     admin=Depends(require_admin)
 ):
     return update_space(db, space_id, data)
+
+# ADMIN — Delete space
+@router.delete("/{space_id}")
+def admin_delete_space(
+    space_id: UUID,
+    db: Session = Depends(get_db),
+    admin=Depends(require_admin)
+):
+    from app.spaces.service import delete_space
+    return delete_space(db, space_id)

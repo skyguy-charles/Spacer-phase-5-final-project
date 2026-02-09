@@ -42,3 +42,27 @@ def update_user(db: Session, user_id: UUID, data: UserUpdate):
     db.commit()
     db.refresh(user)
     return user
+
+def delete_user(db: Session, user_id: UUID):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted successfully"}
+
+
+def update_user_role(db: Session, user_id: UUID, role: str):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    user.role = role.upper()
+    db.commit()
+    db.refresh(user)
+    return user

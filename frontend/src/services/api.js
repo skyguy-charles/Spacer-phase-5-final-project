@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://spacer-phase-5-final-project-7.onrender.com/api';
+const API_BASE_URL = 'https://spacer-phase-5-final-project-7.onrender.com';
 
 export const fetchAPI = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;

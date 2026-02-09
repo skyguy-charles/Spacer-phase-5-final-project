@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from datetime import timedelta
+from uuid import UUID
 
 from app.database.models import Booking, Space
 
@@ -49,3 +50,40 @@ def create_booking(db: Session, user, data):
 
 def list_user_bookings(db: Session, user):
     return db.query(Booking).filter(Booking.user_id == user.id).all()
+
+def update_booking_status(db: Session, booking_id: UUID, status: str):
+    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+    if not booking:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Booking not found"
+        )
+    booking.status = status
+    db.commit()
+    db.refresh(booking)
+    return booking
+
+
+def cancel_booking(db: Session, booking_id: UUID):
+    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+    if not booking:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Booking not found"
+        )
+    booking.status = "CANCELLED"
+    db.commit()
+    db.refresh(booking)
+    return booking
+
+
+def delete_booking(db: Session, booking_id: UUID):
+    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+    if not booking:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Booking not found"
+        )
+    db.delete(booking)
+    db.commit()
+    return {"message": "Booking deleted successfully"}

@@ -36,3 +36,9 @@ def update_space(db: Session, space_id: UUID, data):
     db.commit()
     db.refresh(space)
     return space
+
+def delete_space(db: Session, space_id: UUID):
+    space = get_space_by_id(db, space_id)
+    db.delete(space)
+    db.commit()
+    return {"message": "Space deleted successfully"}
