@@ -12,8 +12,6 @@ import { fetchBookings } from './redux/bookingsSlice';
 import { fetchUsers } from './redux/usersSlice';
 
 store.dispatch(fetchSpaces());
-store.dispatch(fetchBookings());
-store.dispatch(fetchUsers());
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
