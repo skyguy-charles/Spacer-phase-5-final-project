@@ -129,21 +129,6 @@ cd frontend
 npm install
 ```
 
-### Database Setup
-
-#### Create the Database
-
-```bash
-# Connect to PostgreSQL
-psql -U postgres
-
-# Create database
-CREATE DATABASE spacer_db;
-
-# Exit psql
-\q
-```
-
 #### Run Migrations
 
 **For FastAPI with Alembic:**
@@ -233,15 +218,6 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-**Flask:**
-```bash
-cd backend
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-flask --app app run --debug --host 127.0.0.1 --port 8000
-```
-
-Backend will be available at: **http://127.0.0.1:8000**
-
 ### 3. Start the Frontend
 
 ```bash
@@ -253,39 +229,7 @@ Frontend will be available at: **http://localhost:3000**
 
 ---
 
-## 🧪 Testing
-
-### Backend Tests
-
-```bash
-cd backend
-source .venv/bin/activate
-
-# Using pytest
-pytest -v
-
-# Using unittest
-python -m unittest discover -s tests -v
-```
-
-### Frontend Tests
-
-```bash
-cd frontend
-
-# Run all tests
-npm test
-
-# Run tests with coverage
-npm test -- --coverage
-
-# Run tests in watch mode
-npm test -- --watch
-```
-
----
-
-## 📚 API Documentation
+## API Documentation
 
 ### Interactive API Docs
 
@@ -293,8 +237,6 @@ npm test -- --watch
 - **Swagger UI:** http://127.0.0.1:8000/docs
 - **ReDoc:** http://127.0.0.1:8000/redoc
 
-**If using Flask:**
-- API documentation available via Postman collection (link to be added)
 
 ### Key Endpoints
 
@@ -309,7 +251,7 @@ npm test -- --watch
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 spacer/
@@ -341,50 +283,6 @@ spacer/
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! Follow these steps:
-
-### 1. Fork the Repository
-Click the "Fork" button at the top right of this page.
-
-### 2. Create a Feature Branch
-```bash
-git checkout -b feature/amazing-feature
-```
-
-### 3. Make Your Changes
-- Write clean, documented code
-- Follow existing code style
-- Add tests for new features
-- Update documentation as needed
-
-### 4. Commit Your Changes
-```bash
-git commit -m "Add: amazing new feature"
-```
-
-Use conventional commit messages:
-- `Add:` new features
-- `Fix:` bug fixes
-- `Update:` changes to existing features
-- `Docs:` documentation changes
-- `Test:` test additions or changes
-
-### 5. Push and Create Pull Request
-```bash
-git push origin feature/amazing-feature
-```
-
-Then open a Pull Request on GitHub with a clear description of your changes.
-
-### Code Review Process
-- All PRs require at least one review
-- Ensure all tests pass
-- Maintain code coverage above 80%
-
----
-
 ## 👥 Team
 
 | Name | Role | Responsibilities |
@@ -397,15 +295,8 @@ Then open a Pull Request on GitHub with a clear description of your changes.
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-## 🙏 Acknowledgments
-
-- Thanks to all contributors who have helped shape Spacer
-- Built with ❤️ for communities seeking meaningful gathering spaces
-
-**Made with ❤️ by the Spacer Team**
