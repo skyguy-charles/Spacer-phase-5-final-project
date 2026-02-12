@@ -13,12 +13,12 @@ app = FastAPI(title="Spacer API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://frontend-six-zeta-786mmpz7hq.vercel.app",  # Replace with your actual Vercel URL
-        "http://localhost:5173",  # For local testing
-        "http://localhost:3000",  # Alternative local port
+        "https://frontend-six-zeta-786mmpz7hq.vercel.app",  # ← your exact Vercel URL
+        "http://localhost:3000",                            # keep for local dev
+        "*"                                                 # temporary wildcard for testing (remove later)
     ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["*"],   # or ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
     allow_headers=["*"],
 )
 
